@@ -11,6 +11,8 @@ import Checkout from '../components/cart/Checkout'
 import OrderConfirmationPage from '../pages/OrderConfirmationPage'
 import OrderDetails from '../pages/OrderDetails'
 import MyOrders from '../pages/MyOrders'
+import AdminLayout from '../components/admin/AdminLayout'
+import AdminDashboard from '../components/admin/AdminDashboard'
 
 const AllRoutes = () => {
   return (
@@ -26,6 +28,10 @@ const AllRoutes = () => {
           <Route path='order-confirmation' element={<OrderConfirmationPage/>} ></Route>
           <Route path='order/:id' element={<OrderDetails/>} ></Route>
           <Route path='my-orders' element={<MyOrders/>} ></Route>
+      </Route>
+      <Route path='/admin' element={<AdminLayout/>} >
+          <Route index element={<AdminDashboard/>} ></Route>
+
       </Route>
       </Routes>
   )
