@@ -2,7 +2,7 @@ import React from 'react'
 import { FaSignOutAlt } from 'react-icons/fa';
 import { FaBoxOpen, FaClipboardCheck, FaClipboardList, FaShop, FaStore, FaUser } from 'react-icons/fa6'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-const AdminSidebar = () => {
+const AdminSidebar = ({toggleSidebar}) => {
 
     const navigate = useNavigate();
 
@@ -18,28 +18,28 @@ const AdminSidebar = () => {
         </div>
         <h2 className='text-xl text-white font-medium text-center mb-6' >Admin Dashboard</h2>
         <div className='flex flex-col space-y-2' >
-            <NavLink to="/admin/users"
+            <NavLink to="/admin/users" onClick={toggleSidebar}
             className={({isActive})=>isActive?"bg-gray-700 text-white px-4 py-3 rounded flex items-center space-x-2"
             :"text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}
             >
                 <FaUser/>
                 <span>Users</span>
             </NavLink>
-            <NavLink to="/admin/products"
+            <NavLink to="/admin/products" onClick={toggleSidebar}
             className={({isActive})=>isActive?"bg-gray-700 text-white px-4 py-3 rounded flex items-center space-x-2"
             :"text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}
             >
                 <FaBoxOpen/>
                 <span>Products</span>
             </NavLink>
-            <NavLink to="/admin/orders"
+            <NavLink to="/admin/orders" onClick={toggleSidebar}
             className={({isActive})=>isActive?"bg-gray-700 text-white px-4 py-3 rounded flex items-center space-x-2"
             :"text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}
             >
                 <FaClipboardList/>
                 <span>Orders</span>
             </NavLink>
-            <NavLink to="/"
+            <NavLink to="/" 
             className={({isActive})=>isActive?"bg-gray-700 text-white px-4 py-3 rounded flex items-center space-x-2"
             :"text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}
             >

@@ -13,6 +13,9 @@ import OrderDetails from '../pages/OrderDetails'
 import MyOrders from '../pages/MyOrders'
 import AdminLayout from '../components/admin/AdminLayout'
 import AdminDashboard from '../components/admin/AdminDashboard'
+import UserManagement from '../components/admin/UserManagement'
+import ProductManagement from '../components/admin/ProductManagement'
+import EditProductPage from '../components/admin/EditProductPage'
 
 const AllRoutes = () => {
   return (
@@ -31,7 +34,9 @@ const AllRoutes = () => {
       </Route>
       <Route path='/admin' element={<AdminLayout/>} >
           <Route index element={<AdminDashboard/>} ></Route>
-
+          <Route path='users' element={<UserManagement/>}  ></Route>
+          <Route path='products' element={<ProductManagement/>}  ></Route>
+          <Route path='products/:id/edit' element={<EditProductPage/>} ></Route>
       </Route>
       </Routes>
   )

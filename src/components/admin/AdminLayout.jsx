@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FaBars } from 'react-icons/fa6';
 import AdminSidebar from './AdminSidebar';
 import AdminDashboard from './AdminDashboard';
+import { Outlet } from 'react-router-dom';
 
 const AdminLayout = () => {
 
@@ -27,10 +28,10 @@ const AdminLayout = () => {
         )}
 
         <div className={`bg-gray-900 w-64 min-h-screen fixed transform ${isSidebarOpen?"translate-x-0":"-translate-x-full"} transition-transform duration-300 md:translate-x-0 md:static md:block z-30`} >
-            <AdminSidebar/>
+            <AdminSidebar toggleSidebar={toggleSidebar}/>
         </div>
         <div className='grow px-6 py-4' >
-            <AdminDashboard/>
+            <Outlet/>
         </div>
 
     </div>
