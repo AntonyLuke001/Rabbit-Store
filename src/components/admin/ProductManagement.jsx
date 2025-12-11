@@ -18,7 +18,7 @@ const ProductManagement = () => {
     }
   return (
     <div className='max-w-7xl mx-auto p-6'>
-        <h2>Product Management</h2>
+        <h2 className='font-bold text-3xl mb-8'  >Product Management</h2>
         <div className='overflow-x-auto shadow-md sm:rounded-lg' >
             <table className='min-w-full text-left text-gray-500' >
                 <thead className='uppercase text-gray-700 text-xs bg-gray-100' >

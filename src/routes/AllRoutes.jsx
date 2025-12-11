@@ -16,6 +16,7 @@ import AdminDashboard from '../components/admin/AdminDashboard'
 import UserManagement from '../components/admin/UserManagement'
 import ProductManagement from '../components/admin/ProductManagement'
 import EditProductPage from '../components/admin/EditProductPage'
+import OrderManagement from '../components/admin/OrderManagement'
 
 const AllRoutes = () => {
   return (
@@ -37,6 +38,7 @@ const AllRoutes = () => {
           <Route path='users' element={<UserManagement/>}  ></Route>
           <Route path='products' element={<ProductManagement/>}  ></Route>
           <Route path='products/:id/edit' element={<EditProductPage/>} ></Route>
+          <Route path='orders' element={<OrderManagement/>} ></Route>
       </Route>
       </Routes>
   )
