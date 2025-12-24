@@ -4,7 +4,7 @@ const EditProductPage = () => {
 
     const [productData, setProductData] = useState({
         name:"",
-        descripton:"",
+        description:"",
         price:"",
         countInStock:0,
         sku:"",
@@ -58,21 +58,23 @@ const EditProductPage = () => {
                 </div>
                 <div className='mb-6' >
                     <label className='block font-semibold mb-2'>Description</label>
-                    <textarea name="description" value={productData.descripton} 
-                    rows={4} className='w-full border border-gray-300 rounded-md p-2' required
+                    <textarea name="description" value={productData.description} 
+                    rows={4} className='w-full border border-gray-300 rounded-md p-2' 
+                    onChange={handlechange}
+                    required
                     id=""></textarea>
                 </div>    
                 <div className='mb-6' >
                     <label className='block font-semibold mb-2' >Price</label>
                     <input type="number"
                     name='price' value={productData.price} 
-                    onChange={handlechange} className='w-full border vorder-gray-300 rounded-md p-2' />
+                    onChange={handlechange} className='w-full border border-gray-300 rounded-md p-2' />
                 </div>
                  <div className='mb-6' >
                     <label className='block font-semibold mb-2' >Count In Stock</label>
                     <input type="number"
                     name='countInStock' value={productData.countInStock} 
-                    onChange={handlechange} className='w-full border vorder-gray-300 rounded-md p-2' />
+                    onChange={handlechange} className='w-full border border-gray-300 rounded-md p-2' />
                 </div>
                 <div className='mb-6' >
                     <label className='block font-semibold mb-2'>SKU</label>
@@ -88,14 +90,14 @@ const EditProductPage = () => {
                         Sizes (comma-separated)</label>
                     <input type="text"
                     name='sizes' value={productData.sizes.join(', ')} 
-                    onChange={(e)=> setProductData({...productData,sizes:e.target.value.map((size)=> size.trim)})} className='w-full border vorder-gray-300 rounded-md p-2' />
+                    onChange={(e)=> setProductData({...productData,sizes:e.target.value.split(",").map((size)=> size.trim()).filter(Boolean)})} className='w-full border border-gray-300 rounded-md p-2' />
                 </div>
                 <div className='mb-6' >
                     <label className='block font-semibold mb-2' >
                         Colors (comma-separated)</label>
                     <input type="text"
                     name='colors' value={productData.colors.join(', ')} 
-                    onChange={(e)=> setProductData({...productData,colors:e.target.value.map((color)=> color.trim)})} className='w-full border vorder-gray-300 rounded-md p-2' />
+                    onChange={(e)=> setProductData({...productData,colors:e.target.value.split(",").map((color)=> color.trim).filter(Boolean)})} className='w-full border border-gray-300 rounded-md p-2' />
                 </div>
 
                 <div className='mb-6' >
