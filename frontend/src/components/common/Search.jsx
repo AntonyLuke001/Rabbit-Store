@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiMagnifyingGlass, HiMiniXMark } from 'react-icons/hi2';
+import { useSearchParams } from 'react-router-dom';
 
 const Search = () => {
 
     const [searchTerm,setSearchTerm] = useState("");
     const [isOpen,setIsOpen] = useState(false);
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const handleSearchToggle = ()=>
     {
@@ -13,10 +16,21 @@ const Search = () => {
     }
     const handleSearch = e =>
     {
-        e.preventDefault;
+        e.preventDefault();
+        if(searchTerm.trim()==="") return;
+        const params = new URLSearchParams(searchParams);
+        params.set("search",searchTerm);
+        setSearchParams(params);
         console.log("Search term: ",searchTerm);
         setIsOpen(false);
     }
+
+    useEffect(() => {
+  const value = searchParams.get("search") || "";
+  setSearchTerm(value);
+}, [searchParams]);
+
+
   return (
     <div className={`flex justify-center items-center w-full transition-all duration-300
     ${isOpen?"absolute top-0 left-0 w-full bg-white h-24 z-50":"w-auto"}`}>
