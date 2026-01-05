@@ -189,7 +189,7 @@ router.delete("/",async(req,res)=>
         res.status(500).json({message : "Server Error"});
     }
 })
-//merge guest cart an saved cart of the logged in user
+//merge guest cart with saved cart of the logged in user
 router.post("/merge", protect, async(req,res)=>
 {
     const {guestId} = req.body;
