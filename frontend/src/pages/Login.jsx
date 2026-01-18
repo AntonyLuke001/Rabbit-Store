@@ -1,16 +1,28 @@
  import React, { useState } from 'react'
  import { Link } from 'react-router-dom'
  import login from "../assets/login.webp"
+ import { loginUser } from '../redux/slices/authSlices'
+import { useDispatch } from 'react-redux'
+ 
 
  const Login = () => {
 
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const dispatch = useDispatch();
+
+    const handleSubmit = (e)=>
+    {
+        e.preventDefault();
+        dispatch(loginUser({email,password}))
+    }
 
    return (
      <div className='flex ' >
         <div className='flex flex-col justify-center w-full md:w-1/2 items-center p-8 md:p-12' >
-            <form className='w-full max-w-md bg-white p-8 shadow-sm' >
+            <form 
+            onSubmit={handleSubmit}
+            className='w-full max-w-md bg-white p-8 shadow-sm' >
                 <div className='flex justify-center mb-6' >
                     <h2 className='text-xl font-medium' >
                         Rabbit
