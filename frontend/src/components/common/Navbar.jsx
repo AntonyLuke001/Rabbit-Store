@@ -5,12 +5,15 @@ import { HiOutlineBars3 } from "react-icons/hi2";
 import Search from './Search';
 import CartDrawer from '../layout/CartDrawer';
 import { IoMdClose } from 'react-icons/io';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
 
     const [drawerOpen, setDrawerOpen ] = useState(false);
     const [navDrawerOpen,setNavDrawerOpen] = useState(false);
-   
+    const { cart } = useSelector((state)=>state.cart)
+
+    const cartCount = cart?.products?.reduce((total,product)=> total+product.quantity ,0) || 0;
     const toggleCartDrawer = ()=>
     {
         if(navDrawerOpen === true)
@@ -55,7 +58,10 @@ const Navbar = () => {
             </Link>
             <button className='relative hover:text-black cursor-pointer'>
                 <HiOutlineShoppingCart onClick={toggleCartDrawer} className='h-6 w-6 text-gray-700'/>
-                <span className='absolute -top-1 bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5'>4</span>
+                {
+                    cartCount > 0 && (<span className='absolute -top-1 bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5'>{cartCount}</span>
+)
+                }
             </button>
             {/* Search */}
             <Search />

@@ -116,6 +116,7 @@ const productsSlice = createSlice({
             };
         }
     },
+
     extraReducers : (builder) => {
         builder
         .addCase(fetchProductsByFilters.pending, (state) => {
@@ -136,7 +137,7 @@ const productsSlice = createSlice({
         })
         .addCase(fetchProductDetails.fulfilled, (state,action) => {
             state.loading = false;
-            state.selectedproducts =  action.payload ;
+            state.selectedProduct =  action.payload ;
         })
         .addCase(fetchProductDetails.rejected, (state, action) => {
             state.loading = false;
@@ -153,7 +154,7 @@ const productsSlice = createSlice({
                 (product) => product._id === updateProduct._id
             )
             if(index !== -1){
-                state.product[index] = updateProduct;
+                state.products[index] = updateProduct;
             }
         })
         .addCase(updateProduct.rejected, (state, action) => {
@@ -166,7 +167,7 @@ const productsSlice = createSlice({
         })
         .addCase(fetchSimilarProducts.fulfilled, (state,action) => {
             state.loading = false;
-            state.products = action.payload ;
+            state.similarProducts = action.payload ;
         })
         .addCase(fetchSimilarProducts.rejected, (state, action) => {
             state.loading = false;

@@ -1,79 +1,68 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from "sonner"
 import ProductGrid from './ProductGrid'
-const ProductDetails = () => {
+import { useParams } from 'react-router-dom'
+import { useDispatch,useSelector } from 'react-redux'
+import { fetchProductDetails, fetchSimilarProducts } from '../../redux/slices/productsSlice'
+import { addToCart } from '../../redux/slices/cartSlice'
 
-  const selectedProduct = {
-    name:"Stylish Jacket",
-    price: 120,
-    originalPrice: 150,
-    description:"This is a stylish jacket perfect for any occasion",
-    brand:"FashionBrand",
-    material:"Leather",
-    sizes:["S","M","L","XL"],
-    colors:["Black","Red"],
-    images:[{
-        url:"https://picsum.photos/500/500?random=1",
-        altText:"Stylish Jacket 1"
-    },
-    {
-        url:"https://picsum.photos/500/500?random=2",
-        altText:"Stylish Jacket 2"
-    }
+const ProductDetails = ({ productId }) => {
 
-]
-  }  
+  const { id } = useParams(); 
+  const dispatch = useDispatch(); 
 
-  const similarproducts = 
-  [{
-    _id:1,
-    name:"Product 1",
-    price:200,
-    images :[{
-        url:"https://picsum.photos/500/500?random=1"
-    }]
-  },
-  {
-    _id:2,
-    name:"Product 2",
-    price:200,
-    images :[{
-        url:"https://picsum.photos/500/500?random=2"
-    }]
-  },
-  {
-    _id:3,
-    name:"Product 3",
-    price:200,
-    images :[{
-        url:"https://picsum.photos/500/500?random=3"
-    }]
-  },
-  {
-    _id:4,
-    name:"Product 4",
-    price:200,
-    images :[{
-        url:"https://picsum.photos/500/500?random=4"
-    }]
-  }
+  const { selectedProduct,loading,error,similarProducts } = useSelector(
+    (state) => state.products
+  );
 
-]
+  const { user, guestId } = useSelector((state)=> state.auth);
 
-  const [curentImage,setCurrentImage] = useState(selectedProduct.images[0].url);
-  const selectedImage = useRef();
+  const [currentImage,setCurrentImage] = useState(null);
+  const selectedImage = useRef(null);
 
   const [selectedSize,setSelectedSize] = useState("");
   const [selectedColour,setSelectedColour] = useState("");
   const [quantity,setQuantity] = useState(1);
   const [isButtonDisabled,setIsButtonDisabled] = useState(false);
 
+  const productFetchId = productId || id;
+
+  useEffect(()=>
+    {
+        // Only fetch if we don't have product data passed as prop
+        if( productFetchId)
+        {
+            dispatch(fetchProductDetails(productFetchId));
+            dispatch(fetchSimilarProducts({id : productFetchId}));
+        }
+    },[dispatch,productFetchId])
+
+  useEffect(()=>{
+    // Fix: Use selectedProduct instead of just selectedProduct
+    if(selectedProduct?.images?.length > 0)
+    {
+        setCurrentImage(selectedProduct.images[0].url);
+    }
+  },[selectedProduct])
+
+  useEffect(()=>
+    {
+        if(selectedImage.current && currentImage){
+            selectedImage.current.src = currentImage
+        }  
+    },[currentImage])
+    useEffect(() => {
+        setSelectedSize("");
+        setSelectedColour("");
+        setQuantity(1);
+    }, [productFetchId]);
+
   const calquantity = (opp) =>
   {
     if(opp==="add")
-        setQuantity(quantity+1);
+        setQuantity(q => q + 1);
     else if(opp==="minus" && quantity>1)
-        setQuantity(quantity-1);
+        setQuantity(q => Math.max(1, q - 1));
   }
 
   const handleAddTOCart = ()=>
@@ -86,35 +75,50 @@ const ProductDetails = () => {
         return;
     }    
         setIsButtonDisabled(true);
-
-        setTimeout(()=>{
-            toast.success("Product added to cart",{
+        dispatch(
+            addToCart({
+                productId : productFetchId,// Fix: Use selectedProduct._id instead of productFetchId
+                quantity,
+                size : selectedSize,
+                color : selectedColour,
+                guestId,
+                userId : user?._id,
+            })
+        )
+        .then(()=>{
+            toast.success("Added to cart successfully",{
                 duration:3000
-            });
+            })
+        }
+        ).finally(()=>{
             setIsButtonDisabled(false);
-        },2000)
-    }
+        });
+    };
+
+    if(loading&& !selectedProduct) return <div className='p-6' >Loading...</div>; // Only show loading if not using product prop
+    if(error) return <div className='p-6' >Error: {error}</div>;
+    
   
 
-    useEffect(()=>
-    {
-     selectedImage.current.src = curentImage;   
-    },[curentImage])
+    
 
   return (
+    
     <div className='p-6'>
-        <div className='max-w-6xl mx-auto bg-white p-8 rounded-lg '>
+        {
+            selectedProduct && (
+                <div className='max-w-6xl mx-auto bg-white p-8 rounded-lg '>
             <div className='flex flex-col md:flex-row'>
                 <div  className='hidden md:flex flex-col space-y-4 mr-6'>
                     {selectedProduct.images.map((image,index)=>
                     (
                         <img onClick={()=>setCurrentImage(image.url)}  key={index} src={image.url} alt={image.altText} 
-                        className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${curentImage===image.url?" border-black":"border-gray-300"}`}/>
+                        className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${currentImage===image.url?" border-black":"border-gray-300"}`}/>
                     ))}
                 </div>
                 <div className='md:w-1/2' >
                     <div className='mb-4'>
-                        <img ref={selectedImage} src={selectedProduct.images[0].url} alt="Main Product"
+                        <img ref={selectedImage} src={currentImage} alt="Main Product"
                         className='w-full h-auto object-cover rounded-lg' />
                     </div>
                 </div>
@@ -122,18 +126,18 @@ const ProductDetails = () => {
                     {selectedProduct.images.map((image,index)=>
                     (
                         <img onClick={()=>setCurrentImage(image.url)}   key={index} src={image.url} alt={image.altText} 
-                        className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${curentImage===image.url?" border-black":"border-gray-300"}`}/>
+                        className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${currentImage===image.url?" border-black":"border-gray-300"}`}/>
                     ))}
                 </div>
                 <div className='md:w-1/2 md:ml-10' >
                     <h1 className='text-2xl md:text-3xl font-semibold mb-2' >
                     {selectedProduct.name}
                     </h1>
-                    <p className='text-lg text-gray-600 mb-1 line-through' >
-                        ${selectedProduct.originalPrice}
+                    <p className='text-lg text-gray-800 mb-1 line-through' >
+                        ${selectedProduct.price}
                     </p>
                     <p className='text-xl text-gray-800 font-medium mb-2' >
-                        ${selectedProduct.price}
+                        ${selectedProduct.discountPrice}
                     </p>
                     <p className='text-gray-600 mb-4' >{selectedProduct.description}</p>
                     <div className='mb-4'>
@@ -141,9 +145,15 @@ const ProductDetails = () => {
                         <div className='flex gap-2 mt-2' >
                             {selectedProduct.colors.map((color,index)=>
                             (
-                                <button key={index} 
-                                onClick={()=> setSelectedColour(color)}
-                                className={`w-8 h-8 rounded-full border bg-${color.toLowerCase()} cursor-pointer brightness-50 border ${selectedColour===color?"border-black":"border-gray-300"}`} ></button>
+                                <button
+                                key={index}
+                                onClick={() => setSelectedColour(color)}
+                                className={`w-8 h-8 rounded-full border ${
+                                    selectedColour === color ? "border-black" : "border-gray-300"
+                                }`}
+                                style={{ backgroundColor: color.toLowerCase() }}
+                                />
+
                             ))}
                         </div>
                     </div>
@@ -186,12 +196,19 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                <h2 className='text-3xl text-center font-bold mb-4 mt-16'  >You May Also Like</h2>
-                <ProductGrid products={similarproducts}/>
-            </div>
+            {/* Only show similar products if we're not using productId prop (i.e., we're on the product detail page) */}
+            {!productId && (
+                <div>
+                    <h2 className='text-3xl text-center font-bold mb-4 mt-16'  >You May Also Like</h2>
+                    <ProductGrid products={similarProducts} loading={loading} error={error} />
+                </div>
+            )}
         </div>
+            )
+        }
+        
     </div>
+   
   )
 }
 

@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { HiMagnifyingGlass, HiMiniXMark } from 'react-icons/hi2';
-import { useSearchParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { fetchProductsByFilters, setFilters } from '../../redux/slices/productsSlice';
 
 const Search = () => {
 
     const [searchTerm,setSearchTerm] = useState("");
     const [isOpen,setIsOpen] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
 
     const handleSearchToggle = ()=>
     {
     
-            setIsOpen(!isOpen);
+        setIsOpen(!isOpen);
     }
     const handleSearch = e =>
     {
         e.preventDefault();
-        if(searchTerm.trim()==="") return;
-        const params = new URLSearchParams(searchParams);
-        params.set("search",searchTerm);
-        setSearchParams(params);
-        console.log("Search term: ",searchTerm);
+        dispatch(setFilters({search:searchTerm}))
+        dispatch(fetchProductsByFilters({search:searchTerm}));
+        navigate(`/collections/all?search=${searchTerm}`)
         setIsOpen(false);
     }
 

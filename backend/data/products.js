@@ -18,7 +18,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=39",
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJKG2i4dNYDIRqdj4K_ZlhDJJJICZalqcTIg&s",
         altText: "Classic Oxford Button-Down Shirt Front View",
       },
       {
@@ -46,7 +46,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=41",
+        url: "https://pvh-brands.imgix.net/catalog/product/media/0190324-K10K110856BEH-MO-TP-F1.jpg?w=&h=&crop=top&fit=crop&auto=compress&auto=format",
         altText: "Slim-Fit Stretch Shirt Front View",
       },
       {
@@ -74,7 +74,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=43",
+        url: "https://m-commerce.countryroad.com.au/productimages_display/TRMEDIUM/1/119795_557981_370166.jpg",
         altText: "Casual Denim Shirt Front View",
       },
       {
@@ -102,7 +102,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=45",
+        url: "https://www.marinelayer.com/cdn/shop/products/S28_M_SS_PRINTED_BUTTON_DOWN_SWIM_TRUNK_4963-Final-Final-Web_2000x.jpg?v=1671044681",
         altText: "Printed Resort Shirt Front View",
       },
       {
@@ -130,7 +130,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=47",
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkNbsRcCrB3Gd3uVZe7Pv4_NWa4jTHOQmVnQ&s",
         altText: "Slim-Fit Easy-Iron Shirt Front View",
       },
       {
@@ -158,7 +158,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=3",
+        url: "https://m.media-amazon.com/images/I/71JZHBz2nyL._SX522_.jpg",
         altText: "Polo T-Shirt Front View",
       },
       {
@@ -186,7 +186,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=5",
+        url: "https://www.wearduds.com/products/victory-over-sized-t-shirt-black?srsltid=AfmBOorleT_tlIPyWOd2uCNGJUDckrL-UAErCV7wBHEtMyFc0DeY-s4l",
         altText: "Oversized Graphic T-Shirt Front View",
       },
     ],
@@ -210,7 +210,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=6",
+        url: "https://www.themodestman.com/wp-content/uploads/2022/01/Everything-About-Henley-Shirts-for-Men.jpg",
         altText: "Regular-Fit Henley Shirt Front View",
       },
     ],
@@ -234,7 +234,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=7",
+        url: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQgR7dcKtwHY4c59r8NniUccx4R_UP8cSGZGGWU8VEXaAtWnfOrfvuJIV7OCEDsOMC-pjJoLatJNspU0bpnbElwLh4GTV28Ag",
         altText: "Long-Sleeve Thermal Tee Front View",
       },
     ],
@@ -258,7 +258,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=8",
+        url: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR94amIrLtAMcczWthGJ5mnN8EWsj3ZTfv2yd4xH7BUFfGHlpjcbiurB-ZxTpAoB6PxoEkk7O1VS72B92iE5xLcnyAkn0R8",
         altText: "V-Neck Classic T-Shirt Front View",
       },
     ],
@@ -282,7 +282,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=9",
+        url: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSgkpkGNxcqNHiAYPYsQtbl2IkPa2L3xTleju7qRI464dmc4eH9RHbvxNnb-ay7W73yOUzvxFbu0HboqA_2V9rHfriuQVmWYGCHvN2L2qju3vYsWpubVTlz",
         altText: "Slim Fit Joggers Front View",
       },
     ],
@@ -306,7 +306,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=10",
+        url: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS5-JjzW9nBWtAxn80rEOrKANC6OUfjRdHqgR1UuvDJNpvb3867kAGperJQa_SqHjcGjjfXs5H7ux41KfMIE0fdDUN2M_vl-w",
         altText: "Cargo Joggers Front View",
       },
     ],
@@ -330,7 +330,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=11",
+        url: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT3mh7_tBffV6J-5FypHpwAaGhEurRVB5h402FFbxQ7OfCQ5sHPrbFWJKHsFHn5MIQmno1ZLkvjgM307E-6anZXiAGZqjkT6Y5EhprbrN4",
         altText: "Tapered Sweatpants Front View",
       },
     ],

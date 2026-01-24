@@ -134,7 +134,7 @@ router.get('/', async(req,res)=>
 {
     try{
 
-        console.log(req.query);
+        
 
         const { collection, size, color, gender, minPrice, maxPrice, sortBy,
             search, category, material, brand, limit
@@ -211,7 +211,7 @@ router.get('/', async(req,res)=>
         }
 
         
-    console.log(query);
+
     let products = await Product.find(query).sort(sort).limit(Number(limit)||0);
     res.json(products);    
 
@@ -254,25 +254,6 @@ router.get('/new-arrivals', async(req,res)=>
     }
 })
 
-router.get('/:id', async(req, res)=>
-{
-    try{
-        const product = await Product.findById(req.params.id);
-        if(product)
-        {
-            res.json(product);
-        }
-        else
-        {
-            res.status(404).json({message : "Product not found"});
-        }
-    }catch(err)
-    {
-        console.log(err);
-        res.status(500).send("Server Error");
-    }
-})
-
 router.get('/similar/:id',async(req,res)=> 
 {
     try{
@@ -299,5 +280,26 @@ router.get('/similar/:id',async(req,res)=>
     }
 }
 )
+
+
+router.get('/:id', async(req, res)=>
+{
+    try{
+        const product = await Product.findById(req.params.id);
+        if(product)
+        {
+            res.json(product);
+        }
+        else
+        {
+            res.status(404).json({message : "Product not found"});
+        }
+    }catch(err)
+    {
+        console.log(err);
+        res.status(500).send("Server Error");
+    }
+})
+
 
 module.exports = router;

@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 const User = require('./models/user');
 const Product = require('./models/Products');
-const cart = require('./models/Cart');
+const Cart = require('./models/Cart');
 const products = require('./data/products');
 
 dotenv.config();
@@ -27,10 +27,6 @@ const seed = async()=>
     const sampleProducts = products.map(product => {
         return {...product,user : createdUser._id}
     })
-
-    await Product.MONGO_URI
-
-    const userId = createdUser._id;
 
     await Product.insertMany(sampleProducts);
     console.log("Data Seeded Successfully");
