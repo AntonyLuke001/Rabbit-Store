@@ -115,7 +115,7 @@ const NewProducts = () => {
                     draggable='false'
                     className='w-full h-[500px] rounded-lg object-cover' src={product.images[0].url} alt={product.images[0].altText || product.name}/>
                     <div className='absolute w-full bottom-0 left-0 opacity-100 backdrop-blur-2xl text-white p-4 rounded-b-lg'>
-                        <Link to={`.product/${product._id}`} className="block">
+                        <Link to={`/product/${product._id}`} className="block">
                         <h1 className='font-medium'>{product.name}</h1>
                         <p className='mt-1'>{product.price}</p>
                         </Link>

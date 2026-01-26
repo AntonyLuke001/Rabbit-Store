@@ -1,30 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Paypal from './Paypal';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCheckout } from '../../redux/slices/checkoutSlice';
+import axios from 'axios';
 
 const Checkout = () => {
 
   const [checkoutId,setCheckoutId] = useState(null);
 
-  const cart = {
-    products : [
-    {
-        name:"Stylish Jacket",
-        size:"M",
-        color:"Black",
-        price:120,
-        image: "https://picsum.photos/150?random=1"
-    },
-    {
-        name:"Casual Sneakerst",
-        size:"42",
-        color:"White",
-        price:75,
-        image: "https://picsum.photos/150?random=2"
-    },    
-  ],
-  totalPrice:195
-  }
+  const dispatch = useDispatch();
+  const { cart,loading,error } =  useSelector((state)=> state.cart);
+  const { user } = useSelector((state)=> state.auth);
 
   const navigate = useNavigate();
   const [shippingAddress,setShippingAddress] = useState({
@@ -37,16 +24,77 @@ const Checkout = () => {
     phone : ""
   })
 
-  const handleCreateCheckout = (e) =>
+  useEffect(()=>{
+    if(!cart || !cart.products || cart.products.length === 0){
+        navigate("/");
+    }
+  },[cart,navigate]);
+
+  const handleCreateCheckout = async(e) =>
   {
     e.preventDefault();
-    setCheckoutId(123);
+    if(cart && cart.products.length>0)
+    {
+        const res = await dispatch(createCheckout({
+            checkoutItems : cart.products,
+            shippingAddress,
+            paymentMethod:"Paypal",
+            totalPrice: cart.totalPrice,
+        }))
+
+        if(res.payload && res.payload._id)
+    {
+        setCheckoutId(res.payload._id);
+    }
+    }
   }
 
-  const handlePaymentSuccess = (details) =>
+  const handlePaymentSuccess = async(details) =>
   {
-        console.log("Payment Success",details);
-        navigate("/order-confirmation")  
+        try {
+            const response = await axios.put(
+                `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/pay`,
+                { paymentStatus : "paid", paymentDetails: details },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                    }
+                }
+            )
+           
+                await handleFinalizeCheckout(checkoutId);
+           
+        } catch (error) {
+            console.error(error);
+        }  
+  }
+
+  const handleFinalizeCheckout = async(checkoutId)=>{
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/finalize`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("userToken")}`
+                }
+            }
+        )
+      
+            navigate("/orderconfirmation");
+        
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
+  if(loading) return <p>Loading cart ...</p>
+  if(error) return <p>Error loading cart: {error}</p>
+  
+  if(!cart || !cart.products || cart.products.length === 0)
+  {
+    navigate("/");
+    return null;
   }
 
 
@@ -59,7 +107,7 @@ const Checkout = () => {
                 <div className='mb-4' >
                     <label className='block text-gray-700'>Email</label>
                     <input type="email"
-                    value="user@exmple.com"
+                    value={user? user.email:""}
                     disabled
                     className='w-full bg-gray-100 p-2  rounded'
                     />

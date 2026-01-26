@@ -15,7 +15,7 @@ const Paypal = ({ amount, onSuccess, onError }) => {
         return actions.order.create({
             purchase_units: [{
                 amount: {
-                    value: amount.toString(),
+                    value: parseFloat(amount).toFixed(2),
                     currency_code: "USD"
                 },
                 description: "RabbitStore Purchase"
