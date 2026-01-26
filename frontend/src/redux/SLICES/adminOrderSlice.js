@@ -4,19 +4,21 @@ import axios from "axios";
 export const fetchAllOrders = createAsyncThunk(
     "adminOrders/fetchAllOrders",
     async (__DO_NOT_USE_ActionTypes, {rejectWithValue}) => {
-        try{
+        try {
+            const token = localStorage.getItem("userToken");
             const response = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders`,
-            {
-                headers : {
-                    "Authorization" : `Bearer ${localStorage.getItem("token")}`
+                `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
-            }
-        );
-        return response.data;
-        }catch(err)
-        {
-            return rejectWithValue(err.response.data); 
+            );
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(
+                err.response?.data?.message || "Failed to fetch orders"
+            );
         }
     }
 )
@@ -24,20 +26,22 @@ export const fetchAllOrders = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
     "adminOrders/updateOrderStatus",
     async({id, status}, {rejectWithValue}) => {
-        try{
+        try {
+            const token = localStorage.getItem("userToken");
             const response = await axios.put(
                 `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${id}`,
-                {status},
-            {
-                headers : {
-                    "Authorization" : `Bearer ${localStorage.getItem("token")}`
+                { status },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
-            }
-        );
-        return response.data;
-        }catch(err)
-        {
-            return rejectWithValue(err.response.data); 
+            );
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(
+                err.response?.data?.message || "Failed to update order"
+            );
         }
     }
 )
@@ -45,19 +49,21 @@ export const updateOrderStatus = createAsyncThunk(
 export const deleteOrder = createAsyncThunk(
     "adminOrders/deleteOrder",
     async(id, {rejectWithValue}) => {
-        try{
-             await axios.delete(
+        try {
+            const token = localStorage.getItem("userToken");
+            await axios.delete(
                 `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders/${id}`,
-            {
-                headers : {
-                    "Authorization" : `Bearer ${localStorage.getItem("token")}`
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
-            }
-        );
-        return id;
-        }catch(err)
-        {
-            return rejectWithValue(err.response.data); 
+            );
+            return id;
+        } catch (err) {
+            return rejectWithValue(
+                err.response?.data?.message || "Failed to delete order"
+            );
         }
     }
 )
@@ -78,24 +84,23 @@ const adminOrderSlice = createSlice({
         builder
         .addCase(fetchAllOrders.pending, (state) => {
             state.loading = true;
+            state.error = null;
         })
         .addCase(fetchAllOrders.fulfilled, (state, action) => {
             state.loading = false;
             state.orders = action.payload;
             state.totalOrders = action.payload.length;
-
-            const totalSales = action.payload.reduce((sum, order) => 
-                sum + order.totalAmount, 0);
-
+            const totalSales = action.payload.reduce((sum, order) =>
+                sum + (order.totalAmount || order.totalPrice || 0), 0);
             state.totalSales = totalSales;
         })
         .addCase(fetchAllOrders.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.payload.message;
+            state.error = action.payload;
         })
         .addCase(updateOrderStatus.fulfilled, (state, action) => {
             const updatedOrder = action.payload;
-            const orderIndex = state.orders.findaIndex(
+            const orderIndex = state.orders.findIndex(
                 (order) => order._id === updatedOrder._id
             )
             if (orderIndex !== -1) state.orders[orderIndex] = updatedOrder;

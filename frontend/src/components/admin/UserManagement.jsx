@@ -1,15 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { addUser, deleteUser, fetchUsers, updateUser } from '../../redux/slices/adminSlice';
 
 const UserManagement = () => {
 
-    const users = [
-        {
-            _id:123321,
-            name:"John Doe",
-            email:"john@example.com",
-            role:"admin"
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const { user } = useSelector((state) => state.auth);
+    const { users,loading,error } = useSelector((state)=> state.admin)
+    
+    useEffect(()=>{
+        if(user && user.role!=="admin"){
+            navigate("/");
         }
-    ];
+    },[user,navigate]);
+
+    useEffect(()=>{
+        if(user && user.role === "admin"){
+            dispatch(fetchUsers());
+        }
+    },[dispatch,user])
 
     const [formData,setFormData] = useState({
         name:"",
@@ -30,23 +42,36 @@ const UserManagement = () => {
     const handleFormSubmit = (e)=>
     {
         e.preventDefault();
+        dispatch(addUser(formData));
+
+        setFormData({
+            name:"",
+            email:"",
+            password:"",
+            role:"customer"
+        })
 
     }
 
-    const handleRoleChange = (userID,role)=>
+    const handleRoleChange = (userID,newRole)=>
     {
-
+        dispatch(updateUser({id:userID, role:newRole}))
     }
 
     const handleDeleteUser = (userID)=>
     {
-        
+        if(window.confirm("Are you sure you want to delete this user?"))
+        {
+            dispatch(deleteUser(userID))        
+        }
     }
 
 
   return (
     <div className='p-6 max-w-7xl mx-auto' >
             <h2 className='font-bold text-3xl mb-8' >User Management</h2>
+            {loading && <p>Loading...</p>}
+            {error && <p>Error:{error}...</p>}
             <div className='px-8 mb-6' >
                     <h2 className='font-bold text-xl mb-4' >Add New User</h2>
                     <form onSubmit={handleFormSubmit} >

@@ -1,23 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { fetchAllOrders, updateOrderStatus } from '../../redux/slices/adminOrderSlice';
 
 const OrderManagement = () => {
 
-  const orders = [
-    {
-        _id:1231231,
-        user:{
-            name:"John Doe"
-        },
-        totalPrice: 100,
-        status: "Processing"
-    }
-  ]  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleStatusChange = (e)=>
+  const { user } = useSelector((state)=> state.auth);
+  const { orders,loading, error } = useSelector((state)=> state.adminOrders);
+
+    useEffect(() => {
+        if (!user || user.role !== "admin") {
+            navigate("/");
+        } else {
+            dispatch(fetchAllOrders());
+        }
+    }, [dispatch, navigate, user]);
+  const handleStatusChange = (orderId,status)=>
   {
-    
+    dispatch(updateOrderStatus({id:orderId, status}))
   }
 
+  if(loading) return <p>Loading...</p>
+  if(error) return <p>Error: {error}</p>
   return (
     <div className='max-w-7xl mx-auto p-6' >
         <h2 className='font-bold text-3xl mb-8'  >Order Management</h2>
@@ -43,13 +50,13 @@ const OrderManagement = () => {
                             > 
                                 <td className='text-gray-900 font-medium whitespace-nowrap py-4 px-4' >#{order._id}</td>
                                 <td className='p-4' >{order.user.name}</td>
-                                <td className='p-4' >${order.totalPrice}</td>
+                                <td className='p-4' >${order.totalPrice.toFixed(2 )}</td>
                                 <td className='p-4' >
                                         <select name="status" 
                                         value={order.status}
                                         onChange={(e)=>handleStatusChange(order._id,e.target.value)}
                                         id="" className='bg-gray-50 border border-gray-300 text-sm text-gray-900 rounded-lg p-3 focus:ring-blue-500  focus:border-blue-500' >
-                                            <option value="Proceessing">Processing</option>
+                                            <option value="Processing">Processing</option>
                                             <option value="Shipped">Shipped</option>
                                             <option value="Delivered">Delivered</option>
                                             <option value="Cancelled">Cancelled</option>
@@ -65,10 +72,16 @@ const OrderManagement = () => {
                         ))
                     ):
                     (
-                        <tr aria-colspan={4} >
-                                No orders found.
+                        <tr>
+                            <td
+                            colSpan={5}
+                            className="p-4 text-center text-gray-500"
+                            >
+                            No orders found.
+                            </td>
                         </tr>
-                    )}
+                        )
+                        }
                 </tbody>
             </table>
 

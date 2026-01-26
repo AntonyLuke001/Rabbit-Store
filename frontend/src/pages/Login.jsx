@@ -14,7 +14,7 @@ import { mergeCart } from '../redux/slices/cartSlice'
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { user, guestId } = useSelector((state)=>state.auth);
+    const { user, guestId ,loading} = useSelector((state)=>state.auth);
     const  { cart } = useSelector((state)=> state.cart);
 
     const redirect = new URLSearchParams(location.search).get("redirct") || "/";
@@ -74,7 +74,7 @@ import { mergeCart } from '../redux/slices/cartSlice'
                     />
                 </div>
                 <button className='w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800' type='submit' >
-                    Sign In
+                    {loading?"loading...":"Sign In"}
                 </button>
                 <p className='mt-6 text-center text-sm' >Don't have an account?
                     <Link to={`/register?redirect=${encodeURIComponent(redirect)}`} className='text-blue-700 font-semibold underline ml-2'>

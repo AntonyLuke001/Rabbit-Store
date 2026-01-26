@@ -8,7 +8,7 @@ export const fetchUsers = createAsyncThunk(
         {
             headers : { Authorization : `Bearer ${localStorage.getItem("userToken")}`  }
         })
-    response.data;
+    return  response.data;
     }
 )
 
@@ -35,30 +35,40 @@ export const addUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
     "admin/updateUser",
-    async({id,name,email,role}) => {
-        const response = await axios.put(
-            `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/${id}`,
-            {
-                headers : {
-                    Authorization : `Bearer ${localStorage.getItem("userToken")}`
+    async({id, name, email, role}, { rejectWithValue }) => {
+        try {
+            const response = await axios.put(
+                `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/${id}`,
+                { name, email, role },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("userToken")}`
+                    }
                 }
-            }
-        )
-        response.data;
+            );
+            return response.data.user;
+        } catch (err) {
+            return rejectWithValue(err.response?.data?.message || "Failed to update user");
+        }
     }
 )
 
 export const deleteUser = createAsyncThunk(
     "admin/deleteUser",
-    async(id) => {
-        
+    async(id, { rejectWithValue }) => {
+        try {
+            await axios.delete(
                 `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/${id}`,
                 {
-                    headers : {
-                        Authorization : `Bearer ${localStorage.getItem("userToken")}`
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("userToken")}`
                     }
                 }
+            );
             return id;
+        } catch (err) {
+            return rejectWithValue(err.response?.data?.message || "Failed to delete user");
+        }
     }
 )
 
