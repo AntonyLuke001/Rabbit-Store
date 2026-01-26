@@ -66,7 +66,7 @@ const EditProductPage = () => {
             )
             setProductData((prevData)=>({
                 ...prevData,
-                images: [...prevData.images, {url:data.imageUrl,alttext:""}]
+                images: [...prevData.images, {url:data.imageUrl,altText:""}]
             }))
             setUploading(false);
         }catch(error)
@@ -76,10 +76,10 @@ const EditProductPage = () => {
         }
     }
 
-    const handleSubmit = (e) =>
+    const handleSubmit = async (e) =>
     {
         e.preventDefault();
-        dispatch(updateProduct({id,productData}))
+        await dispatch(updateProduct({id,productData}))
         navigate("/admin/products");
     }
 
@@ -140,7 +140,7 @@ const EditProductPage = () => {
                         Colors (comma-separated)</label>
                     <input type="text"
                     name='colors' value={productData.colors.join(', ')} 
-                    onChange={(e)=> setProductData({...productData,colors:e.target.value.split(",").map((color)=> color.trim).filter(Boolean)})} className='w-full border border-gray-300 rounded-md p-2' />
+                    onChange={(e)=> setProductData({...productData,colors:e.target.value.split(",").map((color)=> color.trim()).filter(Boolean)})} className='w-full border border-gray-300 rounded-md p-2' />
                 </div>
 
                 <div className='mb-6' >
@@ -153,6 +153,12 @@ const EditProductPage = () => {
                                 <div key={index} >
                                     <img src={image.url} alt="Product Image"
                                     className='w-20 h-20 object-cover rounded-md shadow-md' />
+                                    <button type="button" onClick={() => {
+                                        setProductData(prev => ({
+                                            ...prev,
+                                            images: prev.images.filter((_, i) => i !== index)
+                                        }));
+                                        }}>Remove</button>
                                 </div>
                             ))
 
