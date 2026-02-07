@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://your-frontend.vercel.app"
+    "https://rabbit-store-xi.vercel.app/"
   ],
   credentials: true
 }));
