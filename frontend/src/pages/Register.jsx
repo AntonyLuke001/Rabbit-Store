@@ -1,7 +1,7 @@
  import React, { useState } from 'react'
  import { Link, useLocation, useNavigate } from 'react-router-dom'
  import register from "../assets/register.webp"
- import { registerUser } from '../redux/slices/authSlices' 
+ import { registerUser } from '../redux/slices/authSlice' 
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { mergeCart } from '../redux/slices/cartSlice'

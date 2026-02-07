@@ -3,7 +3,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { FaBoxOpen, FaClipboardCheck, FaClipboardList, FaShop, FaStore, FaUser } from 'react-icons/fa6'
 import { useDispatch } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { logout } from '../../redux/slices/authSlices';
+import { logout } from '../../redux/slices/authSlice';
 import { clearCart } from '../../redux/slices/cartSlice';
 const AdminSidebar = ({toggleSidebar}) => {
 

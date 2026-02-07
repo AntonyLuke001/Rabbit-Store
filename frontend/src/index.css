@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-#root{
+#root {
+  font-family: "Inter", sans-serif;
   font-style: normal;
+  font-optical-sizing: auto;
 }
 
 @theme {
@@ -9,9 +11,12 @@
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.hide-
-  font-family: "Inter",sans-serif;
-  font-optical-sizing: auto;scrollbar::-webkit-scrollbar {
+.hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
+/* Hide scrollbar for IE, Edge, Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

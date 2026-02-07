@@ -2,7 +2,7 @@ import React from 'react'
 import MyOrders from './MyOrders'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../redux/slices/authSlices';
+import { logout } from '../redux/slices/authSlice';
 import { clearCart } from '../redux/slices/cartSlice';
 import { useEffect } from 'react';
 
