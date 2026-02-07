@@ -39,3 +39,119 @@ build
 *.njsproj
 *.sln
 *.sw?
+# Node.js (frontend & backend)
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.DS_Store
+frontend/.vscode/
+
+backend/node_modules/
+backend/dist/
+backend/build/
+backend/.env
+backend/.DS_Store
+backend/.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDE/editor
+.vscode/
+.idea/
+
+# Misc
+.env
+*.local
+
+# Ignore executables
+*.exe
+
+# Ignore coverage
+coverage/
+
+# Ignore npm debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore test output
+/test-output/
+
+# Ignore build artifacts
+/build/
+/dist/
+
+# Ignore public assets cache
+frontend/public/cache/
+
+# Ignore package-lock
+frontend/package-lock.json
+backend/package-lock.json
+
+# Ignore frontend specific
+frontend/.parcel-cache/
+frontend/.eslintcache
+
+# Ignore backend specific
+backend/.eslintcache
+backend/.parcel-cache/
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.swo
+
+# Ignore coverage reports
+frontend/coverage/
+backend/coverage/
+
+# Ignore Redux DevTools
+frontend/reduxDevTools/
+
+# Ignore vercel
+frontend/vercel.json
+
+# Ignore README backups
+frontend/README.md.bak
+backend/README.md.bak
+
+# Ignore config backups
+backend/config/*.bak
+
+# Ignore database backups
+backend/data/*.bak
+
+# Ignore uploads
+backend/uploads/
+
+# Ignore seeder output
+backend/seeder-output/
+
+# Ignore local scripts
+backend/scripts/
+
+# Ignore local test files
+backend/tests/
+frontend/tests/
+
+# Ignore local cache
+frontend/.cache/
+backend/.cache/
+
+# Ignore local coverage
+frontend/.coverage/
+backend/.coverage/
+
+# Ignore local logs
+frontend/logs/
+backend/logs/
+
+# Ignore local temp
+frontend/tmp/
+backend/tmp/

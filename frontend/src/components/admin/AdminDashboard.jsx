@@ -62,7 +62,7 @@ const AdminDashboard = () => {
                                 className='border-b cursor-pointer hover:bg-gray-50'
                                 >
                                   <td className='p-4' >{order._id}</td>
-                                  <td className='p-4' >{order.user.name}</td>
+                                  <td className='p-4' >{order.user && order.user.name ? order.user.name : 'N/A'}</td>
                                   <td className='p-4' >${order.totalPrice.toFixed(2)}</td>
                                   <td className='p-4' >{order.status}</td>
                                 </tr>
