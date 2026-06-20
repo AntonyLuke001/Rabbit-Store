@@ -2,8 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const loadCartFromStorage = () => {
-    const storedCart = localStorage.getItem("cart");
-    return storedCart ? JSON.parse(storedCart) : [];
+    try {
+        const storedCart = localStorage.getItem("cart");
+        return storedCart && storedCart !== "undefined" ? JSON.parse(storedCart) : { cartItems: [], cartTotalPrice: 0 };
+    } catch {
+        return { cartItems: [], cartTotalPrice: 0 };
+    }
 };
 
 const saveCartToStorage = (cart) => {

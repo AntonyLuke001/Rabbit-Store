@@ -1,0 +1,32 @@
+[33m77381da[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Added deployement url in cors
+[33m53ac257[m[33m ([m[1;32magents/cors-policy-error-fix[m[33m)[m first commit
+[33m2112955[m first commit
+[33m13380d1[m Fix CORS: Remove trailing slash from allowed origin
+[33m50d2df5[m server
+[33m177c7c1[m Fix: Rename SLICES to slices for case-sensitive file systems
+[33m921b41c[m css
+[33m8de2151[m vercel.json
+[33mdc3c70c[m completed
+[33me0fc268[m complete
+[33m3d2ac9e[m admin data
+[33ma15f9ed[m login redirect
+[33m56f6182[m collection filter
+[33mb43f371[m productGrid.jsx
+[33m6ddc3e4[m home.jsx
+[33m2037cb1[m newArrival
+[33m19c6ff6[m adminOrderSlice
+[33mf22e4cb[m adminSlice, cartSlice, orderSlice
+[33mc4511b8[m authSlice
+[33m308e6e5[m cloudinary
+[33mb1ccf7c[m orderRoutes
+[33m6bfb084[m mergecart
+[33m84870c2[m mergecart route
+[33m4bd61f5[m cart Routes
+[33me2133d9[m productRouter
+[33m6188269[m ReadMe file
+[33m47818e9[m Restructured repo into full MERN project (frontend + backend)
+[33m268519b[m Cleaned and organized gitignore
+[33m6d2f771[m order manage
+[33m5471e6e[m edit product
+[33mfa364a4[m admin
+[33m3f23959[m order

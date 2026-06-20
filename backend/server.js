@@ -19,8 +19,10 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://lukedev.local:5173",
+    "http://localhost:5173",
     "https://rabbit-store-xi.vercel.app",
     "https://rabbit-store-antony-luke-ps-projects.vercel.app",
+    "https://rabbit-store-git-main-antony-luke-ps-projects.vercel.app",
   ],
   credentials: true
 }));

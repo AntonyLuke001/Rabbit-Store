@@ -1,9 +1,14 @@
 import { createSlice , createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios"
 
-const userFromStorage = localStorage.getItem("userInfo")
-    ?JSON.parse(localStorage.getItem("userInfo"))
-    : null;
+const userFromStorage = (() => {
+    try {
+        const item = localStorage.getItem("userInfo");
+        return item && item !== "undefined" ? JSON.parse(item) : null;
+    } catch {
+        return null;
+    }
+})();
 
 const initialGuestId = localStorage.getItem("guestId") || `guest_${new Date().getTime()}`;
 localStorage.setItem("guestId",
